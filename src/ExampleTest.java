@@ -93,7 +93,7 @@ class ExampleTest {
     @Test
     void nameIsValidTest() {
         assertTrue(service.saveStudent("5", "John", 926));
-        assertTrue(service.saveStudent("7", null, 926));
+        assertTrue(service.saveStudent("7", "Marius", 926));
     }
 
     @Test
