@@ -63,13 +63,13 @@ class ExampleTest {
     @Test
     void groupNumberInsideBoundsTest1() {
         assertTrue(service.saveStudent("6", "Marius", 926));
-        assertTrue(service.saveStudent("7", "John", 911));
+        assertTrue(service.saveStudent("7", "John", 111));
     }
 
     @Test
     void groupNumberInsideBoundsTest2() {
         assertTrue(service.saveStudent("6", "Marius", 926));
-        assertTrue(service.saveStudent("7", "John", 912));
+        assertTrue(service.saveStudent("7", "John", 112));
     }
 
     @Test
