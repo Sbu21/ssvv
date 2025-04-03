@@ -14,6 +14,7 @@ import validation.TemaValidator;
 import validation.Validator;
 
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Tag("ExamplePack")
@@ -51,13 +52,13 @@ class ExampleTest {
     @Test
     void groupNumberOutOfBoundsTest1() {
         assertTrue(service.saveStudent("5", "Marius", 926));
-        assertTrue(service.saveStudent("5", "John", 110));
+        assertFalse(service.saveStudent("5", "John", 110));
     }
 
     @Test
     void groupNumberOutOfBoundsTest2() {
         assertTrue(service.saveStudent("5", "Marius", 926));
-        assertTrue(service.saveStudent("5", "John", 938));
+        assertFalse(service.saveStudent("5", "John", 938));
     }
 
     @Test
@@ -87,7 +88,7 @@ class ExampleTest {
     @Test
     void nameIsValidOrNullTest() {
         assertTrue(service.saveStudent("5", "John", 926));
-        assertTrue(service.saveStudent("7", null, 926));
+        assertFalse(service.saveStudent("7", null, 926));
     }
 
     @Test
@@ -99,7 +100,7 @@ class ExampleTest {
     @Test
     void idIsValidOrEmptyTest() {
         assertTrue(service.saveStudent("5", "John", 926));
-        assertTrue(service.saveStudent("", "Marius", 926));
+        assertFalse(service.saveStudent("", "Marius", 926));
     }
 
     @Test
