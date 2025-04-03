@@ -24,14 +24,14 @@ public class Service {
 
     public Iterable<Nota> findAllNote() { return notaXmlRepo.findAll(); }
 
-    public int saveStudent(String id, String nume, int grupa) {
+    public boolean saveStudent(String id, String nume, int grupa) {
         Student student = new Student(id, nume, grupa);
         Student result = studentXmlRepo.save(student);
 
         if (result == null) {
-            return 1;
+            return true;
         }
-        return 0;
+        return false;
     }
 
     public int saveTema(String id, String descriere, int deadline, int startline) {
