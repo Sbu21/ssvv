@@ -1,6 +1,7 @@
 import domain.Nota;
 import domain.Student;
 import domain.Tema;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import repository.NotaXMLRepository;
@@ -17,6 +18,29 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Tag("ExamplePack")
 class ExampleTest {
+    // TODO setup
+    static Validator<Student> studentValidator;
+    static Validator<Tema> temaValidator;
+    static Validator<Nota> notaValidator;
+    static StudentXMLRepository fileRepository1;
+    static TemaXMLRepository fileRepository2;
+    static NotaXMLRepository fileRepository3;
+    static Service service;
+
+    @BeforeAll
+    static void setUp() {
+        // This method will be executed before all tests in this class
+        System.out.println("Setting up the test environment...");
+        studentValidator = new StudentValidator();
+        temaValidator = new TemaValidator();
+        notaValidator = new NotaValidator();
+
+        fileRepository1 = new StudentXMLRepository(studentValidator, "studenti.xml");
+        fileRepository2 = new TemaXMLRepository(temaValidator, "teme.xml");
+        fileRepository3 = new NotaXMLRepository(notaValidator, "note.xml");
+
+        service = new Service(fileRepository1, fileRepository2, fileRepository3);
+    }
 
     @Test
     void exampleTestCase() {
@@ -25,32 +49,62 @@ class ExampleTest {
     }
 
     @Test
-    void groupNumberOutOfBoundsTest() {
-        Validator<Student> studentValidator = new StudentValidator();
-        Validator<Tema> temaValidator = new TemaValidator();
-        Validator<Nota> notaValidator = new NotaValidator();
-
-        StudentXMLRepository fileRepository1 = new StudentXMLRepository(studentValidator, "studenti.xml");
-        TemaXMLRepository fileRepository2 = new TemaXMLRepository(temaValidator, "teme.xml");
-        NotaXMLRepository fileRepository3 = new NotaXMLRepository(notaValidator, "note.xml");
-
-        Service service = new Service(fileRepository1, fileRepository2, fileRepository3);
-
-        assertTrue(service.saveStudent("5", "Marius", 946));
+    void groupNumberOutOfBoundsTest1() {
+        assertTrue(service.saveStudent("5", "Marius", 926));
+        assertTrue(service.saveStudent("5", "John", 110));
     }
 
     @Test
-    void groupNumberInsideBoundsTest() {
-        Validator<Student> studentValidator = new StudentValidator();
-        Validator<Tema> temaValidator = new TemaValidator();
-        Validator<Nota> notaValidator = new NotaValidator();
+    void groupNumberOutOfBoundsTest2() {
+        assertTrue(service.saveStudent("5", "Marius", 926));
+        assertTrue(service.saveStudent("5", "John", 938));
+    }
 
-        StudentXMLRepository fileRepository1 = new StudentXMLRepository(studentValidator, "studenti.xml");
-        TemaXMLRepository fileRepository2 = new TemaXMLRepository(temaValidator, "teme.xml");
-        NotaXMLRepository fileRepository3 = new NotaXMLRepository(notaValidator, "note.xml");
+    @Test
+    void groupNumberInsideBoundsTest1() {
+        assertTrue(service.saveStudent("6", "Marius", 926));
+        assertTrue(service.saveStudent("7", "John", 911));
+    }
 
-        Service service = new Service(fileRepository1, fileRepository2, fileRepository3);
+    @Test
+    void groupNumberInsideBoundsTest2() {
+        assertTrue(service.saveStudent("6", "Marius", 926));
+        assertTrue(service.saveStudent("7", "John", 912));
+    }
 
-        assertTrue(service.saveStudent("6", "Marius", 936));
+    @Test
+    void groupNumberInsideBoundsTest3() {
+        assertTrue(service.saveStudent("6", "Marius", 926));
+        assertTrue(service.saveStudent("7", "John", 936));
+    }
+
+    @Test
+    void groupNumberInsideBoundsTest4() {
+        assertTrue(service.saveStudent("6", "Marius", 926));
+        assertTrue(service.saveStudent("7", "John", 937));
+    }
+
+    @Test
+    void nameIsValidOrNullTest() {
+        assertTrue(service.saveStudent("5", "John", 926));
+        assertTrue(service.saveStudent("7", null, 926));
+    }
+
+    @Test
+    void nameIsValidTest() {
+        assertTrue(service.saveStudent("5", "John", 926));
+        assertTrue(service.saveStudent("7", null, 926));
+    }
+
+    @Test
+    void idIsValidOrEmptyTest() {
+        assertTrue(service.saveStudent("5", "John", 926));
+        assertTrue(service.saveStudent("", "Marius", 926));
+    }
+
+    @Test
+    void idIsValidTest() {
+        assertTrue(service.saveStudent("5", "John", 926));
+        assertTrue(service.saveStudent("7", "Marius", 926));
     }
 }
