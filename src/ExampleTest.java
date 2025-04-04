@@ -108,4 +108,14 @@ class ExampleTest {
         assertTrue(service.saveStudent("5", "John", 926));
         assertTrue(service.saveStudent("7", "Marius", 926));
     }
+
+    @Test
+    void validAssignmentTest(){
+        assertTrue(service.saveTema("1", "Description", 10, 3) == 1);
+    }
+
+    @Test
+    void assignmentDeadlineOutOfBounds(){
+        assertTrue(service.saveTema("1", "Description", 15, 5) == 0);
+    }
 }

@@ -28,7 +28,10 @@ public class Service {
         Student student = new Student(id, nume, grupa);
         Student result = studentXmlRepo.save(student);
 
-        return result != null;
+        if (result == null) {
+            return false;
+        }
+        return true;
     }
 
     public int saveTema(String id, String descriere, int deadline, int startline) {
