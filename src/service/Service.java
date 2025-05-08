@@ -56,7 +56,7 @@ public class Service {
             Nota nota = new Nota(new Pair(idStudent, idTema), valNota, predata, feedback);
             Nota result = notaXmlRepo.save(nota);
 
-            if (result == null) {
+            if (result != null) {
                 return 1;
             }
             return 0;

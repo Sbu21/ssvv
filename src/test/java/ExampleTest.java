@@ -140,4 +140,11 @@ class ExampleTest {
     void startlineOutOfLowerBoundTest() {
         assertTrue(service.saveTema("1", "Descriere", 10, 0) == 0);
     }
+
+    @Test
+    void bigBangIntegrationTest() {
+        assertTrue(service.saveStudent("1", "John", 936));
+        assertTrue(service.saveTema("1", "Tema John", 11, 10) == 1);
+        assertTrue(service.saveNota("1", "1", 10, 10, "Bun") == 1);
+    }
 }
