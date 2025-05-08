@@ -14,4 +14,3 @@ public class StudentValidator implements Validator<Student> {
         }
     }
 }
-

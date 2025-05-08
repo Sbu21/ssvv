@@ -38,10 +38,7 @@ public class Service {
         Tema tema = new Tema(id, descriere, deadline, startline);
         Tema result = temaXmlRepo.save(tema);
 
-        if (result == null) {
-            return 1;
-        }
-        return 0;
+        return result != null ? 1 : 0;
     }
 
     public int saveNota(String idStudent, String idTema, double valNota, int predata, String feedback) {
