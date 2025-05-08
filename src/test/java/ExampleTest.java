@@ -112,12 +112,32 @@ class ExampleTest {
     }
 
     @Test
-    void validAssignmentTest(){
+    void validAssignmentTest() {
         assertTrue(service.saveTema("1", "Description", 10, 3) == 1);
     }
 
     @Test
-    void assignmentDeadlineOutOfBounds(){
+    void startlineGreaterThanDeadlineTest() {
+        assertTrue(service.saveTema("1", "Descriere", 10, 11) == 0);
+    }
+
+    @Test
+    void assignmentDeadlineOutOfBounds() {
         assertTrue(service.saveTema("1", "Description", 15, 5) == 0);
+    }
+
+    @Test
+    void startlineOutOfHigherBoundTest() {
+        assertTrue(service.saveTema("1", "Descriere", 5, 15) == 0);
+    }
+
+    @Test
+    void deadlineOutOfLowerBoundTest() {
+        assertTrue(service.saveTema("1", "Descriere", 0, 10) == 0);
+    }
+
+    @Test
+    void startlineOutOfLowerBoundTest() {
+        assertTrue(service.saveTema("1", "Descriere", 10, 0) == 0);
     }
 }
