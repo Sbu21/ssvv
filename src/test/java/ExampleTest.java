@@ -3,6 +3,7 @@ package test.java;
 import domain.Nota;
 import domain.Student;
 import domain.Tema;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -142,7 +143,45 @@ class ExampleTest {
     }
 
     @Test
+    void saveStudentTest() {
+        assertTrue(service.saveStudent("1", "John", 936));
+    }
+
+    @Test
+    void saveTemaTest() {
+        assertTrue(service.saveTema("1", "Tema John", 11, 10) == 1);
+    }
+
+    @Test
+    void saveNotaTest() {
+        assertTrue(service.saveNota("1", "1", 10, 10, "Bun") == 1);
+    }
+
+    @Test
+    void saveStudentAndSaveTemaIncrementalTest() {
+        assertTrue(service.saveStudent("1", "John", 936));
+        assertTrue(service.saveTema("1", "Tema John", 11, 10) == 1);
+    }
+
+    @Test
+    void saveStudentAndSaveTemaAndSaveNotaIncrementalTest() {
+        assertTrue(service.saveStudent("1", "John", 936));
+        assertTrue(service.saveTema("1", "Tema John", 11, 10) == 1);
+        assertTrue(service.saveNota("1", "1", 10, 10, "Bun") == 1);
+    }
+
+    @Test
     void bigBangIntegrationTest() {
+        studentValidator = new StudentValidator();
+        temaValidator = new TemaValidator();
+        notaValidator = new NotaValidator();
+
+        fileRepository1 = new StudentXMLRepository(studentValidator, "studenti.xml");
+        fileRepository2 = new TemaXMLRepository(temaValidator, "teme.xml");
+        fileRepository3 = new NotaXMLRepository(notaValidator, "note.xml");
+
+        service = new Service(fileRepository1, fileRepository2, fileRepository3);
+
         assertTrue(service.saveStudent("1", "John", 936));
         assertTrue(service.saveTema("1", "Tema John", 11, 10) == 1);
         assertTrue(service.saveNota("1", "1", 10, 10, "Bun") == 1);
